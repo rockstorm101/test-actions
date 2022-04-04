@@ -56,7 +56,7 @@ jobs:
         with:
           images: rockstorm/jekyll
           flavor:
-            suffix={{ env.DOCKER_TAG_SUFFIX }}
+            suffix=${{ env.DOCKER_TAG_SUFFIX }}
           tags: |
             type=semver,pattern={{major}}
             type=semver,pattern={{major}}.{{minor}}
@@ -65,4 +65,4 @@ jobs:
       - name: Echo Results
         run: |
           echo "Ruby version: ${{ matrix.ruby }}, suffix: ${{ env.DOCKER_TAG_SUFFIX }}"
-          echo "${{ steps.meta.outputs.tags }}
+          echo "${{ steps.meta.outputs.tags }}"
