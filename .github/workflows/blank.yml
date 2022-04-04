@@ -43,8 +43,8 @@ jobs:
     
       - name: Set Metadata Variables
         run: |
-          if [ $matrix.ruby != $LATEST_RUBY_VERSION ]; then
-            tmp="{{ format('-ruby{0}', matrix.ruby) }}";
+          if ${{ ${{ matrix.ruby }} != ${{ env.LATEST_RUBY_VERSION}} }}; then
+            tmp="${{ format('-ruby{0}', '${{ matrix.ruby }}') }}";
           else
             tmp="";
           fi;
@@ -52,4 +52,4 @@ jobs:
           
       - name: Echo Results
         run: |
-          echo "Ruby version: {{ matrix.ruby }}, suffix: {{ env.DOCKER_TAG_SUFFIX }}"
+          echo "Ruby version: ${{ matrix.ruby }}, suffix: ${{ env.DOCKER_TAG_SUFFIX }}"
