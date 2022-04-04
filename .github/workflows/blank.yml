@@ -51,7 +51,7 @@ jobs:
           else
             tmp="";
           fi;
-          echo "DOCKER_TAG_SUFFIX=$tmp" >> $GITHUB_ENV
+          echo "TAG_RUBY_SUFFIX=$tmp" >> $GITHUB_ENV
 
       - name: Docker Metadata
         id: meta
@@ -59,13 +59,13 @@ jobs:
         with:
           images: rockstorm/jekyll
           flavor:
-            suffix=${{ env.DOCKER_TAG_SUFFIX }}
+            suffix=${{ env.TAG_RUBY_SUFFIX }}
           tags: |
-            type=semver,pattern={{major}}
-            type=semver,pattern={{major}}.{{minor}}
-            type=semver,pattern={{version}}
+            type=match,pattern=(\d).*(-\w*)
+            type=match,pattern=(\d.\d).*(-\w*)
+            type=match,pattern=(\d.\d.\d).*(-\w*)
 
       - name: Echo Results
         run: |
-          echo "Ruby version: ${{ matrix.ruby }}, suffix: ${{ env.DOCKER_TAG_SUFFIX }}"
+          echo "Ruby version: ${{ matrix.ruby }}, Ruby suffix: ${{ env.TAG_RUBY_SUFFIX }}"
           echo "${{ steps.meta.outputs.tags }}"
