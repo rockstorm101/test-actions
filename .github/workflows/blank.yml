@@ -65,7 +65,7 @@ jobs:
         uses: docker/metadata-action@v3
         with:
           images: rockstorm/jekyll
-          flavor:
+          flavor: |
             latest=false
             suffix=${{ env.TAG_SUFFIX }}
           tags: |
