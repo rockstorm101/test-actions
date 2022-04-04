@@ -61,9 +61,9 @@ jobs:
           flavor:
             suffix=${{ env.TAG_RUBY_SUFFIX }}
           tags: |
-            type=match,pattern=(\d).*(-\w*)
-            type=match,pattern=(\d.\d).*(-\w*)
-            type=match,pattern=(\d.\d.\d).*(-\w*)
+            type=match,pattern=(?|(\d).*(-\w*)|(\d))
+            type=match,pattern=(?|(\d.\d).*(-\w*)|(\d.\d))
+            type=match,pattern=(?|(\d.\d.\d).*(-\w*)|(\d.\d.\d))
 
       - name: Echo Results
         run: |
