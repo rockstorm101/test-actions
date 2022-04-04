@@ -46,12 +46,15 @@ jobs:
     
       - name: Set Metadata Variables
         run: |
-          if ${{ matrix.ruby != env.LATEST_RUBY_VERSION }}; then
-            tmp="${{ format('-ruby{0}', matrix.ruby) }}";
+          if ${{ contains(github.ref_name, 'slim') }}; then
+            tmp="-slim";
           else
             tmp="";
           fi;
-          echo "TAG_RUBY_SUFFIX=$tmp" >> $GITHUB_ENV
+          if ${{ matrix.ruby != env.LATEST_RUBY_VERSION }}; then
+            tmp="${tmp}${{ format('-ruby{0}', matrix.ruby) }}";
+          fi;
+          echo "TAG_SUFFIX=$tmp" >> $GITHUB_ENV
 
       - name: Docker Metadata
         id: meta
@@ -59,13 +62,13 @@ jobs:
         with:
           images: rockstorm/jekyll
           flavor:
-            suffix=${{ env.TAG_RUBY_SUFFIX }}
+            suffix=${{ env.TAG_SUFFIX }}
           tags: |
-            type=match,pattern=(?|^(\d+).*(-\w*)|^(\d+))
-            type=match,pattern=(?|^(\d+\.\d+).*(-\w*)|^(\d+\.\d+))
-            type=match,pattern=(?|^(\d+\.\d+\.\d+).*(-\w*)|^(\d+\.\d+\.\d+))
+            type=match,pattern=^(\d+),group=1
+            type=match,pattern=^(\d+.\d+),group=1
+            type=match,pattern=^(\d+.\d+.\d+),group=1
 
       - name: Echo Results
         run: |
-          echo "Ruby version: ${{ matrix.ruby }}, Ruby suffix: ${{ env.TAG_RUBY_SUFFIX }}"
+          echo "Ruby version: ${{ matrix.ruby }}, Ruby suffix: ${{ env.TAG_SUFFIX }}"
           echo "${{ steps.meta.outputs.tags }}"
