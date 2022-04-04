@@ -44,17 +44,21 @@ jobs:
           echo Add other actions to build,
           echo test, and deploy your project.
     
-      - name: Set Metadata Variables
+      - name: Set Tags
         run: |
           if ${{ contains(github.ref_name, 'slim') }}; then
             tmp="-slim";
+            enable_latest=false;
           else
             tmp="";
+            enable_latest=true;
           fi;
           if ${{ matrix.ruby != env.LATEST_RUBY_VERSION }}; then
             tmp="${tmp}${{ format('-ruby{0}', matrix.ruby) }}";
+            enable_latest=false;
           fi;
           echo "TAG_SUFFIX=$tmp" >> $GITHUB_ENV
+          echo "ENABLE_LATEST=$enable_latest" >> $GITHUB_ENV
 
       - name: Docker Metadata
         id: meta
@@ -62,11 +66,13 @@ jobs:
         with:
           images: rockstorm/jekyll
           flavor:
+            latest=false
             suffix=${{ env.TAG_SUFFIX }}
           tags: |
             type=match,pattern=^(\d+),group=1
             type=match,pattern=^(\d+.\d+),group=1
             type=match,pattern=^(\d+.\d+.\d+),group=1
+            type=raw,value=latest,enable=${{ env.ENABLE_LATEST }}
 
       - name: Echo Results
         run: |
