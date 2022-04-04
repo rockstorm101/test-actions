@@ -44,12 +44,25 @@ jobs:
       - name: Set Metadata Variables
         run: |
           if ${{ matrix.ruby != env.LATEST_RUBY_VERSION }}; then
-            tmp="${{ format('-ruby{0}', 'matrix.ruby') }}";
+            tmp="${{ format('-ruby{0}', matrix.ruby) }}";
           else
             tmp="";
           fi;
           echo "DOCKER_TAG_SUFFIX=$tmp" >> $GITHUB_ENV
-          
+
+      - name: Docker Metadata
+        id: meta
+        uses: docker/metadata-action@v3
+        with:
+          images: rockstorm/jekyll
+          flavor:
+            suffix={{ env.DOCKER_TAG_SUFFIX }}
+          tags: |
+            type=semver,pattern={{major}}
+            type=semver,pattern={{major}}.{{minor}}
+            type=semver,pattern={{version}}
+
       - name: Echo Results
         run: |
           echo "Ruby version: ${{ matrix.ruby }}, suffix: ${{ env.DOCKER_TAG_SUFFIX }}"
+          echo "${{ steps.meta.outputs.tags }}
