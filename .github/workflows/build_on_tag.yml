@@ -1,0 +1,27 @@
+name: Docker Image Build
+
+on:
+  push:
+    tags:
+
+  workflow_dispatch:
+
+jobs:
+  build-image:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v3
+
+    - name: Set Tags
+      id: meta
+      uses: docker/metadata-action@v3
+      with:
+        images: rockstorm/git-server
+        tags: |
+          type=ref,event=tag
+
+    - name: Echo Results
+      run: |
+        echo "${{ steps.meta.outputs.tags }}"
