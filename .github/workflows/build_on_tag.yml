@@ -3,9 +3,7 @@ name: Docker Image Build
 on:
   push:
     tags:
-      - '*'
-    tags-ignore:
-      - '*docker*'
+      - '!docker'
 
   workflow_dispatch:
 
