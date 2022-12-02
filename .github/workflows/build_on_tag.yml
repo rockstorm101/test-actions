@@ -23,7 +23,7 @@ jobs:
         images: rockstorm/git-server
         tags: |
           type=ref,event=tag
-          type=match,pattern=[^\+]+
+          type=match,pattern=[^\+]+,priority=500
           
 
     - name: Echo Results
