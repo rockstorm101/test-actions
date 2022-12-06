@@ -9,3 +9,4 @@ runs:
     - name: Echo Results
       run: |
         echo "${{ steps.meta.outputs.tags }}"
+      shell: bash
