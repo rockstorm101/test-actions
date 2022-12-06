@@ -22,7 +22,9 @@ jobs:
       with:
         images: rockstorm/git-server
         tags: |
+          # 2.36+b1 (default priority 600)
           type=ref,event=tag
+          # 2.36 (default priority 800)
           type=match,pattern=[^\+]+,priority=500
           
 
