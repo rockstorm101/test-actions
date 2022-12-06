@@ -13,18 +13,21 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-     - name: Checkout Code
-       uses: actions/checkout@v3
+    - name: Checkout Code
+      uses: actions/checkout@v3
 
-     - name: Set Metadata
-       id: meta
-       uses: docker/metadata-action@v3
-       with:
-         images: rockstorm/git-server
-         tags: |
-           # 2.36+b1 (default priority 600)
-           type=ref,event=tag
-           # 2.36 (default priority 800)
-           type=match,pattern=[^\+]+,priority=500
+    - name: Set Metadata
+      id: meta
+      uses: docker/metadata-action@v3
+      with:
+        images: rockstorm/git-server
+        tags: |
+          # 2.36+b1 (default priority 600)
+          type=ref,event=tag
+          # 2.36 (default priority 800)
+          type=match,pattern=[^\+]+,priority=500
           
-     - uses: ./.
+
+    - name: Echo Results
+      run: |
+        echo "${{ steps.meta.outputs.tags }}"
