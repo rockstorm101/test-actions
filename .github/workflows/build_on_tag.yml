@@ -24,4 +24,4 @@ jobs:
            # 2.36 (default priority 800)
            type=match,pattern=[^\+]+,priority=500
           
-     - uses: ./.github/workflows/action.yml
+     - uses: ./action.yml
