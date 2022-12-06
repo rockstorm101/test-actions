@@ -1,0 +1,11 @@
+name: "Check out and Echo"
+
+runs:
+  using: "composite"
+  steps:
+    - name: Checkout Code
+      uses: actions/checkout@v3
+
+    - name: Echo Results
+      run: |
+        echo "${{ steps.meta.outputs.tags }}"
