@@ -3,8 +3,7 @@ name: Docker Image Build
 on:
   push:
     tags:
-      - '**'
-      - '!*docker*'
+      - '*docker*'
 
   workflow_dispatch:
 
@@ -21,6 +20,7 @@ jobs:
       uses: docker/metadata-action@v3
       with:
         images: rockstorm/git-server
+        flavor: latest=false
         tags: |
           # 2.36+b1 (default priority 600)
           type=ref,event=tag
