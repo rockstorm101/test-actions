@@ -1,0 +1,25 @@
+name: Test Docker Build
+
+on:
+  schedule:
+    - cron: '20 7 * * 4'
+
+  workflow_dispatch:
+
+jobs:
+  test-build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        branch: [main, variant]
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ matrix.branch }}
+
+      - name: Echo Results
+        run: |
+          cat test.txt
