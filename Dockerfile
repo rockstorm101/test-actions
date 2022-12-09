@@ -2,5 +2,5 @@
 FROM alpine
 
 RUN apk add git
-RUN echo "Main Branch"
+RUN echo "Variant Branch"
 CMD [“echo”, ”Image created”]
