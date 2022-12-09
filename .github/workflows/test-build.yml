@@ -12,7 +12,7 @@ jobs:
 
     strategy:
       matrix:
-        branch: [main, variant]
+        branch: [main, vartest]
 
     steps:
       - name: Checkout Code
