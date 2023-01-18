@@ -11,6 +11,17 @@ on:
 jobs:
   build-image:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        branch: [master, other]
+        include:
+          - branch: master
+            tags: "a \
+              type=raw,priority=900,value=latest\n\
+              type=raw,priority=700,value=4.2.2\n\
+              type=raw,priority=500,value=4.0\n\
+              type=raw,priority=300,value=4\n\
+              type=raw,priority=100,value=stable"
 
     steps:
      - name: Checkout Code
@@ -21,12 +32,9 @@ jobs:
        uses: docker/metadata-action@v4
        with:
          images: rockstorm/git-server
-         tags: |
-           # 2.36+b1 (default priority 600)
-           type=ref,event=tag
-           # 2.36 (default priority 800)
-           type=match,pattern=[^\+]+,priority=500
+         tags: ${{ matrix.tags }}|
           
      - name: Echo Results
        run: |
+         echo "${{ matrix.branch }}"
          echo "${{ steps.meta.outputs.tags }}"
