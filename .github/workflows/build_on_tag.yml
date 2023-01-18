@@ -16,14 +16,14 @@ jobs:
         branch: [master, other]
         include:
           - branch: master
-            tags: "\
-              latest,priority=900\n\
-               4.2.2,priority=700\n\
-                 4.0,priority=500\n\
-                   4,priority=300\n\
-              stable,priority=100"
+            tags: |
+              latest,priority=900
+               4.2.2,priority=700
+                 4.0,priority=500
+                   4,priority=300
+              stable,priority=100
           - branch: other
-            tags: type=raw,value=pages
+            tags: pages
 
     steps:
      - name: Checkout Code
@@ -34,7 +34,7 @@ jobs:
        uses: docker/metadata-action@v4
        with:
          images: rockstorm/git-server
-         tags: ${{ matrix.tags }}|
+         tags: ${{ matrix.tags }}
           
      - name: Echo Results
        run: |
