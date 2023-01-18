@@ -22,6 +22,8 @@ jobs:
                  4.0,priority=500\n\
                    4,priority=300\n\
               stable,priority=100"
+          - branch: other
+            tags: type=raw,value=pages
 
     steps:
      - name: Checkout Code
