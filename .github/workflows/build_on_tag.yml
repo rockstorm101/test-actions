@@ -16,7 +16,7 @@ jobs:
         branch: [master, other]
         include:
           - branch: master
-            tags: "type=raw,priority=900,value=latest\ntype=raw,priority=700,value=4.2.2\ntype=raw,priority=500,value=4.0\ntype=raw,priority=300,value=4\ntype=raw,priority=100,value=stable\n"
+            tags: "type=raw,priority=900,value=latest\ntype=raw,priority=700,value=4.2.2\ntype=raw,priority=500,value=4.0\ntype=raw,priority=300,value=4\ntype=raw,priority=100,value=stable\n\n"
 
     steps:
      - name: Checkout Code
