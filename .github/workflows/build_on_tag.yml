@@ -16,12 +16,12 @@ jobs:
         branch: [master, other]
         include:
           - branch: master
-            tags: "a \
+            tags: "\
               type=raw,priority=900,value=latest\n\
               type=raw,priority=700,value=4.2.2\n\
               type=raw,priority=500,value=4.0\n\
               type=raw,priority=300,value=4\n\
-              type=raw,priority=100,value=stable"
+              type=raw,priority=100,value=stable\n"
 
     steps:
      - name: Checkout Code
