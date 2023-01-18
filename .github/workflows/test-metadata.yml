@@ -1,0 +1,26 @@
+name: Test Metadata
+on:
+  workflow_dispatch:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        branch: [master]
+        include:
+          - branch: master
+            tags: |
+              type=raw,priority=900,value=4.2.2
+              type=raw,priority=700,value=4.0
+              type=raw,priority=500,value=4
+    steps:
+     - name: Set Metadata
+       id: meta
+       uses: docker/metadata-action@v4
+       with:
+         images: user/example
+         tags: ${{ matrix.tags }}|
+     - name: Echo Results
+       run: |
+         echo "Branch '${{ matrix.branch }}' has tags:"
+         echo "${{ steps.meta.outputs.tags }}"
