@@ -18,10 +18,10 @@ jobs:
           - branch: master
             tags: "\
               latest,priority=900\n\
-              4.2.2,priority=700\n\
-              type=raw,priority=500,value=4.0\n\
-              type=raw,priority=300,value=4\n\
-              type=raw,value=stable,priority=100"
+               4.2.2,priority=700\n\
+                 4.0,priority=500\n\
+                   4,priority=300\n\
+              stable,priority=100"
 
     steps:
      - name: Checkout Code
