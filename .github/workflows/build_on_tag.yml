@@ -15,7 +15,7 @@ jobs:
       fail-fast: true
       matrix:
         variant: [jekyll, builder, minimal]
-        main_tag: latest
+        main_tag: [latest]
         include:
           - variant: builder
             suffix: -builder
