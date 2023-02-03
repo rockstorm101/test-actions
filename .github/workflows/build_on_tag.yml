@@ -14,24 +14,15 @@ jobs:
     strategy:
       fail-fast: true
       matrix:
-        version: [latest]  # "latest" Jekyll vs. GitHub "pages"
-        variant: [builder, minimal]
-        latest: [false]  # whether to produce 'latest' tag or not
+        version: [latest, pages]  # "latest" Jekyll vs. GitHub "pages"
+        variant: [jekyll, builder, minimal]
         include:
-          # Add standard or 'jekyll' variant 
-          - version: latest
-            variant: jekyll
-            latest: true
-          # Set up tags for all "latest" Jekyll versions
           - version: latest
             tags: |
               type=semver,pattern={{version}},priority=700
               type=semver,pattern={{major}}.{{minor}},priority=500
               type=semver,pattern={{major}},priority=300
-          # Add GitHub Pages version
           - version: pages
-            variant: jekyll
-            latest: false
             tags: |
               pages
           # Add suffixes for variants
@@ -39,6 +30,11 @@ jobs:
             suffix: -builder
           - variant: minimal
             suffix: -minimal
+        exclude:
+          - version: pages
+            variant: builder
+          - version: pages
+            variant: minimal
 
     steps:
      - name: Checkout Code
@@ -50,7 +46,7 @@ jobs:
        with:
          images: rockstorm/jekyll
          flavor: |
-           latest=${{ matrix.latest }}
+           latest=${{ ${{ matrix.version }} == 'latest' && ${{ matrix.variant }} == 'jekyll'  }}
            suffix=${{ matrix.suffix }}
          tags: ${{ matrix.tags }}
           
