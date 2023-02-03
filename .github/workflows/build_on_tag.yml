@@ -15,26 +15,30 @@ jobs:
       fail-fast: true
       matrix:
         version: [latest]  # "latest" Jekyll vs. GitHub "pages"
-        variant: [builder, minimal]  # standard variant is 'jekyll'
+        variant: [builder, minimal]
         latest: [false]  # whether to produce 'latest' tag or not
         include:
+          # Add standard or 'jekyll' variant 
+          - version: latest
+            variant: jekyll
+            latest: true
+          # Set up tags for all "latest" Jekyll versions
           - version: latest
             tags: |
               type=semver,pattern={{version}},priority=700
               type=semver,pattern={{major}}.{{minor}},priority=500
               type=semver,pattern={{major}},priority=300
+          # Add GitHub Pages version
           - version: pages
             variant: jekyll
             latest: false
             tags: |
               pages
+          # Add suffixes for variants
           - variant: builder
             suffix: -builder
           - variant: minimal
             suffix: -minimal
-          - version: latest
-            variant: jekyll
-            latest: true
 
     steps:
      - name: Checkout Code
