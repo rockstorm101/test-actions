@@ -46,7 +46,7 @@ jobs:
        with:
          images: rockstorm/jekyll
          flavor: |
-           latest=${{ ${{ matrix.version }} == 'latest' && ${{ matrix.variant }} == 'jekyll'  }}
+           latest=${{  matrix.version == 'latest' &&  matrix.variant == 'jekyll' }}
            suffix=${{ matrix.suffix }}
          tags: ${{ matrix.tags }}
           
