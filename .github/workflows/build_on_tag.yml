@@ -25,6 +25,7 @@ jobs:
               type=semver,pattern={{major}},priority=300
           - version: pages
             variant: jekyll
+            latest: false
             tags: |
               pages
           - variant: builder
