@@ -44,7 +44,7 @@ jobs:
        with:
          images: rockstorm/jekyll
          flavor: |
-           latest=${{ matrix.latest }}
+           latest=${{ Boolean(${{ matrix.latest }}) }}
            suffix=${{ matrix.suffix }}
          tags: ${{ matrix.tags }}
           
