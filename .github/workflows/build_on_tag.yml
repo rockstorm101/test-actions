@@ -11,6 +11,28 @@ on:
 jobs:
   build-image:
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: true
+      matrix:
+        variant: [jekyll, builder, minimal]
+        main_tag: latest
+        include:
+          - variant: builder
+            suffix: -builder
+          - variant: minimal
+            suffix: -minimal
+          - main_tag: latest
+            tags: |
+              type=semver,pattern={{raw}},priority=700
+              type=semver,pattern={{major}}.{{minor}},priority=500
+              type=semver,pattern={{major}},priority=300
+          - main_tag: latest
+            variant: jekyll
+            latest: true
+          - main_tag: pages
+            variant: jekyll
+            tags: |
+              pages,suffix={{ matrix.suffix }}
 
     steps:
      - name: Checkout Code
@@ -20,13 +42,13 @@ jobs:
        id: meta
        uses: docker/metadata-action@v4
        with:
-         images: rockstorm/git-server
-         tags: |
-           type=semver,pattern={{raw}},value=0.1.0+b2
-           type=semver,pattern={{version}},value=0.1.0+b2
-           type=semver,pattern={{major}}.{{minor}},value=0.1.0+b2
+         images: rockstorm/jekyll
+         flavor: |
+           latest=${{ matrix.latest }}
+           suffix=${{ matrix.suffix }}
+         tags: ${{ matrix.tags }}
           
      - name: Echo Results
        run: |
-         echo "${{ matrix.branch }}"
-         echo "${{ steps.meta.outputs.tags }}"
+         echo "Context: ./repos/${{ matrix.variant }}/cache/${{ matrix.main_tag }}"
+         echo "Tags: ${{ steps.meta.outputs.tags }}"
