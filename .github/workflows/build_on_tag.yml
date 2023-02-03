@@ -14,26 +14,26 @@ jobs:
     strategy:
       fail-fast: true
       matrix:
-        variant: [jekyll, builder, minimal]
-        main_tag: [latest]
-        latest: [false]
+        version: [latest]  # "latest" Jekyll vs. GitHub "pages"
+        variant: [builder, minimal]  # standard variant is 'jekyll'
+        latest: [false]  # whether to produce 'latest' tag or not
         include:
-          - variant: builder
-            suffix: -builder
-          - variant: minimal
-            suffix: -minimal
-          - main_tag: latest
+          - version: latest
             tags: |
               type=semver,pattern={{version}},priority=700
               type=semver,pattern={{major}}.{{minor}},priority=500
               type=semver,pattern={{major}},priority=300
-          - main_tag: latest
-            variant: jekyll
-            latest: true
-          - main_tag: pages
+          - version: pages
             variant: jekyll
             tags: |
-              pages,suffix={{ matrix.suffix }}
+              pages
+          - variant: builder
+            suffix: -builder
+          - variant: minimal
+            suffix: -minimal
+          - version: latest
+            variant: jekyll
+            latest: true
 
     steps:
      - name: Checkout Code
@@ -51,5 +51,5 @@ jobs:
           
      - name: Echo Results
        run: |
-         echo "Context: ./repos/${{ matrix.variant }}/cache/${{ matrix.main_tag }}"
+         echo "Context: ./repos/${{ matrix.variant }}/cache/${{ matrix.version }}"
          echo "Tags: ${{ steps.meta.outputs.tags }}"
