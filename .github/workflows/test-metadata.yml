@@ -1,6 +1,10 @@
 name: Test Metadata
 on:
   workflow_dispatch:
+  push:
+    tags:
+      - '**'
+
 jobs:
   test:
     runs-on: ubuntu-latest
@@ -10,9 +14,13 @@ jobs:
         include:
           - branch: master
             tags: |
-              type=raw,priority=900,value=4.2.2
-              type=raw,priority=700,value=4.0
-              type=raw,priority=500,value=4
+              # build (i.e. 1.2.3+b4)
+              type=ref,event=tag,priority=600
+              # patch (i.e. 1.2.3)
+              type=match,pattern=^\d+\.\d+\.\d+,priority=500
+              # minor (i.e. 1.2)
+              type=match,pattern=^\d+\.\d+,priority=400
+
     steps:
      - name: Set Metadata
        id: meta
