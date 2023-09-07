@@ -27,7 +27,7 @@ jobs:
        uses: docker/metadata-action@v4
        with:
          images: user/example
-         tags: ${{ matrix.tags }}|
+         tags: ${{ matrix.tags }}
      - name: Echo Results
        run: |
          echo "Branch '${{ matrix.branch }}' has tags:"
