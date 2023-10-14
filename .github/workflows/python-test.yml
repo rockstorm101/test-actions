@@ -23,8 +23,8 @@ jobs:
 
       - name: Install dependencies
         run: |
-          apt update
-          apt install libdbus-1-dev
+          sudo apt update
+          sudo apt install libdbus-1-dev
 
       - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v3
