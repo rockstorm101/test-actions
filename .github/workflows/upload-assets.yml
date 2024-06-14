@@ -29,4 +29,4 @@ jobs:
           GITHUB_TOKEN: ${{ github.token }}
           ACTIONS_STEP_DEBUG: true
         with:
-          asset_paths: '["./nope/printrun-*"]'
+          asset_paths: '["./nope/printrun-*", "upload/*", "test2.txt"]'
