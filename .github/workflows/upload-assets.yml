@@ -29,6 +29,9 @@ jobs:
       - name: Display structure of downloaded files
         run: ls -R
 
+      - name: Zip artifacts for deployment
+        run: cd upload; for i in $(ls); do cd $i; zip -r "../$i.zip" *; cd ..; done
+
       - name: Upload assets
         uses: alexellis/upload-assets@0.4.1
         env:
