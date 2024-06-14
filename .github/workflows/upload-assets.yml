@@ -26,6 +26,9 @@ jobs:
           path: upload
           merge-multiple: false
 
+      - name: Display structure of downloaded files
+        run: ls -R
+
       - name: Upload assets
         uses: alexellis/upload-assets@0.4.1
         env:
