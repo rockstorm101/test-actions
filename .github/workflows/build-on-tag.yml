@@ -1,10 +1,10 @@
 name: Docker Image Build
 
 on:
-  push:
-    tags:
-      - '**'
-      - '!*docker*'
+  # push:
+  #   tags:
+  #     - '**'
+  #     - '!*docker*'
 
   workflow_dispatch:
 
