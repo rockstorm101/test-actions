@@ -24,6 +24,8 @@ jobs:
           merge-multiple: false
 
       - name: Upload assets
-        run: |
-          ls ./upload/
-          echo "Upload might happen here. Token: ${{ github.token }}"
+        uses: alexellis/upload-assets@0.4.1
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        with:
+          asset_paths: '["./upload/printrun-*"]'
