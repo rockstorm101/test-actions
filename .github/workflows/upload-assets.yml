@@ -27,5 +27,6 @@ jobs:
         uses: alexellis/upload-assets@0.4.1
         env:
           GITHUB_TOKEN: ${{ github.token }}
+          ACTIONS_STEP_DEBUG: true
         with:
-          asset_paths: '["./upload/printrun-*"]'
+          asset_paths: '["./nope/printrun-*"]'
