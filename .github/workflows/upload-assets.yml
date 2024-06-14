@@ -30,7 +30,13 @@ jobs:
         run: ls -R
 
       - name: Zip artifacts for deployment
-        run: cd upload; for i in $(ls); do cd $i; zip -r "../$i.zip" *; cd ..; done
+        run: |
+          cd upload || { echo "Failed to cd into 'upload'"; exit 1; }
+          for i in *; do
+            cd "$i" || { echo "Failed to cd into '$i'"; exit 1; }
+            zip -r "../$i.zip" ./*
+            cd ..
+          done
 
       - name: Upload assets
         uses: alexellis/upload-assets@0.4.1
@@ -38,4 +44,4 @@ jobs:
           GITHUB_TOKEN: ${{ github.token }}
           ACTIONS_STEP_DEBUG: true
         with:
-          asset_paths: '["./nope/printrun-*", "upload/*", "test2.txt"]'
+          asset_paths: '["upload/*.zip", "test2.txt"]'
